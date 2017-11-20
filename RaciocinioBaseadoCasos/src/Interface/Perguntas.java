@@ -90,6 +90,17 @@ public class Perguntas extends javax.swing.JFrame {
         if (contadorQuestoes == 6) {
             if (erradaCrase < erradaRegenciaVerbal || erradaCrase < erradaRegenciaNominal) {
 
+                JOptionPane.showMessageDialog(null, "Mais erros em Crase");
+            }
+
+            if (erradaRegenciaVerbal < erradaCrase || erradaRegenciaVerbal < erradaRegenciaNominal) {
+
+                JOptionPane.showMessageDialog(null, "Mais erros em Verbal");
+            }
+
+            if (erradaRegenciaNominal < erradaRegenciaVerbal || erradaRegenciaNominal < erradaCrase) {
+
+                JOptionPane.showMessageDialog(null, "Mais erros em Nominal");
             }
 
         }
