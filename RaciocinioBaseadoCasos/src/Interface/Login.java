@@ -18,7 +18,13 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
 
+        conect = Conector.conetabd();
+
     }
+
+    int crase;
+    int regenciaVerbal;
+    int regenciaNominal;
 
     public void Logar() {
 
@@ -34,9 +40,8 @@ public class Login extends javax.swing.JFrame {
             rs = pst.executeQuery();
 
             if (rs.next()) {
-
+                chamarTelaPerguntas();
                 dispose();
-
             } else {
                 JOptionPane.showMessageDialog(null, "Login ou Senha Incorreto");
             }
@@ -52,6 +57,71 @@ public class Login extends javax.swing.JFrame {
 
         Cadastro TelaCadastro = new Cadastro();
         TelaCadastro.setVisible(true);
+    }
+
+    public void chamarTelaPerguntas() {
+
+        Perguntas TelaPerguntas = new Perguntas(TXTLogin.getText(), crase, regenciaVerbal, regenciaNominal);
+
+        TelaPerguntas.setVisible(true);
+    }
+
+    public void quantidadePercentualCrase() {
+
+        String sql = "select quantidadecrase from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setString(1, TXTLogin.getText()); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            crase = rs.getInt("quantidadecrase");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+    }
+
+    public void quantidadePercentualRegenciaVerbal() {
+
+        String sql = "select quantidaderegenciaverbal from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setString(1, TXTLogin.getText()); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            regenciaVerbal = rs.getInt("quantidaderegenciaverbal");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }
+
+    public void quantidadePercentualRegenciaNominal() {
+        String sql = "select quantiregencianominal from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setString(1, TXTLogin.getText()); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            regenciaNominal = rs.getInt("quantiregencianominal");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -207,6 +277,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        quantidadePercentualCrase();
+        quantidadePercentualRegenciaVerbal();
+        quantidadePercentualRegenciaNominal();
+
         Logar();
     }//GEN-LAST:event_jButton1ActionPerformed
 

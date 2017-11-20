@@ -28,7 +28,7 @@ public class Cadastro extends javax.swing.JFrame {
         RepitaSenha = TXTRepitaSenha.getText();
 
         if (Senha.equals(RepitaSenha)) {
-            
+
             //Chamar cadastro em BD
             CadastrarUsuario();
 
@@ -52,7 +52,7 @@ public class Cadastro extends javax.swing.JFrame {
 
     public void CadastrarUsuario() {
 
-        String sql = "Insert into usuario (nome,login,senha ) values (?,?,?)";
+        String sql = "Insert into usuario (nome,login,senha, quantidadecrase, quantidaderegenciaverbal, quantiregencianominal, totalerro, totalquestoes) values (?,?,?,?,?,?,?,?)";
 
         try {
 
@@ -61,6 +61,11 @@ public class Cadastro extends javax.swing.JFrame {
             pst.setString(1, TXTNome.getText());
             pst.setString(2, TXTLogin.getText());
             pst.setString(3, TXTSenha.getText());
+            pst.setInt(4, 50);
+            pst.setInt(5, 100);
+            pst.setInt(6, 150);
+            pst.setInt(7, 0);
+            pst.setInt(8, 0);
 
             pst.execute();
 
@@ -212,6 +217,8 @@ public class Cadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+//        JOptionPane.showMessageDialog(null, "A senha é diferenciada por letras MAIUSCULAS e menusculas");
         // Botão Cadastrar
         CompararSenha();
 
