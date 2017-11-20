@@ -85,24 +85,134 @@ public class Perguntas extends javax.swing.JFrame {
     //String para pegar a Alternativa E no BD
     String alternativaE = "";
 
+    public void ajustarCraseMais() {
+
+        String sql = "select quantidadecrase from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setString(1, usuario); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            crase = rs.getInt("quantidadecrase");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+        crase += 4;
+
+        String sql1 = "Update usuario set quantidadecrase = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sql1);
+
+            pst.setInt(1, crase);
+
+            pst.execute();
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+////////////////////////////////////////////////////////////////////////////////
+// Reduzir quantidade de Verbal
+
+        String sqlVerbal = "select quantidaderegenciaverbal from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sqlVerbal);
+
+            pst.setString(1, usuario); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            regenciaVerbal = rs.getInt("quantidaderegenciaverbal");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+        regenciaVerbal -= 2;
+
+        String sqlVerbal1 = "Update usuario set quantidaderegenciaverbal = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sqlVerbal1);
+
+            pst.setInt(1, regenciaVerbal);
+
+            pst.execute();
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+// reduzir quantidade de Nominal
+        String sqlNominal = "select quantiregencianominal from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sqlNominal);
+
+            pst.setString(1, usuario); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            regenciaNominal = rs.getInt("quantiregencianominal");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+        regenciaNominal -= 2;
+
+        String sqlNominal1 = "Update usuario set quantiregencianominal = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sqlNominal1);
+
+            pst.setInt(1, regenciaNominal);
+
+            pst.execute();
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+    }
+
     public void calibrar() {
 
         if (contadorQuestoes == 6) {
-            if (erradaCrase < erradaRegenciaVerbal || erradaCrase < erradaRegenciaNominal) {
+            if (erradaCrase > erradaRegenciaVerbal && erradaCrase > erradaRegenciaNominal) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Crase");
+                ajustarCraseMais();
             }
 
-            if (erradaRegenciaVerbal < erradaCrase || erradaRegenciaVerbal < erradaRegenciaNominal) {
+            if (erradaRegenciaVerbal > erradaCrase && erradaRegenciaVerbal > erradaRegenciaNominal) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Verbal");
             }
 
-            if (erradaRegenciaNominal < erradaRegenciaVerbal || erradaRegenciaNominal < erradaCrase) {
+            if (erradaRegenciaNominal > erradaRegenciaVerbal && erradaRegenciaNominal > erradaCrase) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Nominal");
             }
 
+            contadorQuestoes = 0;
+            erradaCrase = 0;
+            erradaRegenciaVerbal = 0;
+            erradaRegenciaNominal = 0;
         }
     }
 
@@ -683,6 +793,9 @@ public class Perguntas extends javax.swing.JFrame {
         RespostaD();
         RespostaE();
         colocarTela();
+        quantidadePercentualCrase();
+        quantidadePercentualRegenciaVerbal();
+        quantidadePercentualRegenciaNominal();
     }
 
     public void valorResposta() {
