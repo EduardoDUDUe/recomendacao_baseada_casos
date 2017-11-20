@@ -311,7 +311,7 @@ public class Perguntas extends javax.swing.JFrame {
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(null, error);
             }
-            tipo.setText("Verbal");
+            tipo.setText("Regencia Verbal");
         }
 
         if (tipoPergunta > regenciaVerbal && tipoPergunta <= regenciaNominal) {
@@ -334,10 +334,16 @@ public class Perguntas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, error);
             }
 
-            tipo.setText("Nominal");
+            tipo.setText("Regencia Nominal");
         }
 
     }
+    
+    
+    
+    
+    
+    
 
     public void RespostaA() {
 
@@ -761,6 +767,8 @@ public class Perguntas extends javax.swing.JFrame {
 
     public void quantidadeQuestoes() {
 
+        tipo.setText(" esssss");
+        
         String sql = "select totalquestoes from usuario where login = ?";
         try {
 
