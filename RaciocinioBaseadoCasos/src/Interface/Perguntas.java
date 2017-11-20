@@ -118,10 +118,10 @@ public class Perguntas extends javax.swing.JFrame {
         } catch (SQLException error) {
             JOptionPane.showMessageDialog(null, error);
         }
-////////////////////////////////////////////////////////////////////////////////
-// Reduzir quantidade de Verbal
+    }
 
-        String sqlVerbal = "select quantidaderegenciaverbal from usuario where login = ?";
+    public void ajustarCraseMenos() {
+        String sqlVerbal = "select quantidadecrase from usuario where login = ?";
         try {
 
             pst = conect.prepareStatement(sqlVerbal);
@@ -131,21 +131,21 @@ public class Perguntas extends javax.swing.JFrame {
             rs = pst.executeQuery();
             rs.next();
 
-            regenciaVerbal = rs.getInt("quantidaderegenciaverbal");
+            crase = rs.getInt("quantidadecrase");
 
         } catch (SQLException error) {
             JOptionPane.showMessageDialog(null, error);
         }
 
-        regenciaVerbal -= 2;
+        crase -= 2;
 
-        String sqlVerbal1 = "Update usuario set quantidaderegenciaverbal = ?";
+        String sqlVerbal1 = "Update usuario set quantidadecrase = ?";
 
         try {
 
             pst = conect.prepareStatement(sqlVerbal1);
 
-            pst.setInt(1, regenciaVerbal);
+            pst.setInt(1, crase);
 
             pst.execute();
 
@@ -153,41 +153,6 @@ public class Perguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
 
-////////////////////////////////////////////////////////////////////////////////
-// reduzir quantidade de Nominal
-        String sqlNominal = "select quantiregencianominal from usuario where login = ?";
-        try {
-
-            pst = conect.prepareStatement(sqlNominal);
-
-            pst.setString(1, usuario); //Indice da busca ID na tabela crase
-
-            rs = pst.executeQuery();
-            rs.next();
-
-            regenciaNominal = rs.getInt("quantiregencianominal");
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-        regenciaNominal -= 2;
-
-        String sqlNominal1 = "Update usuario set quantiregencianominal = ?";
-
-        try {
-
-            pst = conect.prepareStatement(sqlNominal1);
-
-            pst.setInt(1, regenciaNominal);
-
-            pst.execute();
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-////////////////////////////////////////////////////////////////////////////////
     }
 
     public void ajustarRegenciaVerbalMais() {
@@ -223,12 +188,12 @@ public class Perguntas extends javax.swing.JFrame {
         } catch (SQLException error) {
             JOptionPane.showMessageDialog(null, error);
         }
-////////////////////////////////////////////////////////////////////////////////
-// Reduzir quantidade de Crase
+    }
 
-        String sqlVerbal = "select quantidadecrase from usuario where login = ?";
+    public void ajustarRegenciaVerbalMenos() {
+
+        String sqlVerbal = "select quantidaderegenciaverbal from usuario where login = ?";
         try {
-
             pst = conect.prepareStatement(sqlVerbal);
 
             pst.setString(1, usuario); //Indice da busca ID na tabela crase
@@ -236,21 +201,21 @@ public class Perguntas extends javax.swing.JFrame {
             rs = pst.executeQuery();
             rs.next();
 
-            crase = rs.getInt("quantidadecrase");
+            regenciaVerbal = rs.getInt("quantidaderegenciaverbal");
 
         } catch (SQLException error) {
             JOptionPane.showMessageDialog(null, error);
         }
 
-        crase -= 2;
+        regenciaVerbal -= 2;
 
-        String sqlVerbal1 = "Update usuario set quantidadecrase = ?";
+        String sqlVerbal1 = "Update usuario set quantidaderegenciaverbal = ?";
 
         try {
 
             pst = conect.prepareStatement(sqlVerbal1);
 
-            pst.setInt(1, crase);
+            pst.setInt(1, regenciaVerbal);
 
             pst.execute();
 
@@ -258,8 +223,43 @@ public class Perguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
 
-////////////////////////////////////////////////////////////////////////////////
-// reduzir quantidade de Nominal
+    }
+
+    public void ajustarRegenciaNominalMais() {
+
+        String sqlNominal = "select quantiregencianominal from usuario where login = ?";
+        try {
+            pst = conect.prepareStatement(sqlNominal);
+
+            pst.setString(1, usuario); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            regenciaNominal = rs.getInt("quantiregencianominal");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+        regenciaNominal += 4;
+
+        String sqlNominal1 = "Update usuario set quantiregencianominal = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sqlNominal1);
+
+            pst.setInt(1, regenciaNominal);
+
+            pst.execute();
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }
+
+    public void ajustarRegenciaNominalMenos() {
         String sqlNominal = "select quantiregencianominal from usuario where login = ?";
         try {
 
@@ -292,112 +292,6 @@ public class Perguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
 
-////////////////////////////////////////////////////////////////////////////////
-    }
-
-    public void ajustarRegenciaNominalMais() {
-
-        String sql = "select quantidadecrase from usuario where login = ?";
-        try {
-
-            pst = conect.prepareStatement(sql);
-
-            pst.setString(1, usuario); //Indice da busca ID na tabela crase
-
-            rs = pst.executeQuery();
-            rs.next();
-
-            crase = rs.getInt("quantidadecrase");
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-        crase -= 2;
-
-        String sql1 = "Update usuario set quantidadecrase = ?";
-
-        try {
-
-            pst = conect.prepareStatement(sql1);
-
-            pst.setInt(1, crase);
-
-            pst.execute();
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-////////////////////////////////////////////////////////////////////////////////
-// Reduzir quantidade de Verbal
-
-        String sqlVerbal = "select quantidaderegenciaverbal from usuario where login = ?";
-        try {
-
-            pst = conect.prepareStatement(sqlVerbal);
-
-            pst.setString(1, usuario); //Indice da busca ID na tabela crase
-
-            rs = pst.executeQuery();
-            rs.next();
-
-            regenciaVerbal = rs.getInt("quantidaderegenciaverbal");
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-        regenciaVerbal -= 2;
-
-        String sqlVerbal1 = "Update usuario set quantidaderegenciaverbal = ?";
-
-        try {
-
-            pst = conect.prepareStatement(sqlVerbal1);
-
-            pst.setInt(1, regenciaVerbal);
-
-            pst.execute();
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-////////////////////////////////////////////////////////////////////////////////
-// reduzir quantidade de Nominal
-        String sqlNominal = "select quantiregencianominal from usuario where login = ?";
-        try {
-
-            pst = conect.prepareStatement(sqlNominal);
-
-            pst.setString(1, usuario); //Indice da busca ID na tabela crase
-
-            rs = pst.executeQuery();
-            rs.next();
-
-            regenciaNominal = rs.getInt("quantiregencianominal");
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-        regenciaNominal += 4;
-
-        String sqlNominal1 = "Update usuario set quantiregencianominal = ?";
-
-        try {
-
-            pst = conect.prepareStatement(sqlNominal1);
-
-            pst.setInt(1, regenciaNominal);
-
-            pst.execute();
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-////////////////////////////////////////////////////////////////////////////////
     }
 
     public void calibrar() {
@@ -407,18 +301,25 @@ public class Perguntas extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Crase");
                 ajustarCraseMais();
+                ajustarRegenciaVerbalMenos();
+                ajustarRegenciaNominalMenos();
+
             }
 
             if (erradaRegenciaVerbal > erradaCrase && erradaRegenciaVerbal > erradaRegenciaNominal) {
 
-                ajustarRegenciaVerbalMais();
                 JOptionPane.showMessageDialog(null, "Mais erros em Verbal");
+                ajustarRegenciaVerbalMais();
+                ajustarCraseMenos();
+                ajustarRegenciaNominalMenos();
             }
 
             if (erradaRegenciaNominal > erradaRegenciaVerbal && erradaRegenciaNominal > erradaCrase) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Nominal");
                 ajustarRegenciaNominalMais();
+                ajustarCraseMenos();
+                ajustarRegenciaVerbalMenos();
             }
 
             contadorQuestoes = 0;
