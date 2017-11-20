@@ -86,9 +86,12 @@ public class Perguntas extends javax.swing.JFrame {
     String alternativaE = "";
 
     public void calibrar() {
-        
-        if(contadorQuestoes == 6){
-            
+
+        if (contadorQuestoes == 6) {
+            if (erradaCrase < erradaRegenciaVerbal || erradaCrase < erradaRegenciaNominal) {
+
+            }
+
         }
     }
 
