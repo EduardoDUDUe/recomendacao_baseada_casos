@@ -86,8 +86,10 @@ public class Perguntas extends javax.swing.JFrame {
     String alternativaE = "";
 
     public void calibrar() {
-        //Aqui ajustara no banco os valores da probabilidade de cada questão cair
-
+        
+        if(contadorQuestoes == 6){
+            
+        }
     }
 
     public void quantidadePercentualCrase() {
@@ -338,12 +340,6 @@ public class Perguntas extends javax.swing.JFrame {
         }
 
     }
-    
-    
-    
-    
-    
-    
 
     public void RespostaA() {
 
@@ -767,8 +763,6 @@ public class Perguntas extends javax.swing.JFrame {
 
     public void quantidadeQuestoes() {
 
-        tipo.setText(" esssss");
-        
         String sql = "select totalquestoes from usuario where login = ?";
         try {
 
@@ -839,60 +833,6 @@ public class Perguntas extends javax.swing.JFrame {
         CS1.setSelected(false);
     }
 
-//    public void addBancoRespostaErrada() {
-//        if (tipoPergunta <= crase) {
-//
-//            String sql = "select totalerro from usuario where login = ?";
-//            try {
-//
-//                pst = conect.prepareStatement(sql);
-//
-//                pst.setString(1, usuario); //Indice da busca ID na tabela crase
-//
-//                rs = pst.executeQuery();
-//                rs.next();
-//
-//                respostaErradaCrase = rs.getInt("totalerro");
-//
-//            } catch (SQLException error) {
-//                JOptionPane.showMessageDialog(null, error);
-//            }
-//            
-//            respostaErradaCrase += 1;
-//            
-//            
-//            String sql1 = "Insert into usuario (nome,login,senha, quantidadecrase, quantidaderegenciaverbal, quantiregencianominal) values (?,?,?,?,?,?)";
-//
-//        try {
-//
-//            pst = conect.prepareStatement(sql1);
-//
-//          
-//            pst.setInt(6, 150);
-//
-//            pst.execute();
-//
-//          
-//
-//        } catch (SQLException error) {
-//            JOptionPane.showMessageDialog(null, error);
-//        }
-//
-//            
-//            
-//            
-//        }
-//
-//        if (tipoPergunta > crase && tipoPergunta <= regenciaVerbal) {
-//
-//            respostaErradaRegenciaVerbal += 1;
-//        }
-//
-//        if (tipoPergunta > regenciaVerbal && tipoPergunta <= regenciaNominal) {
-//
-//            respostaErradaRegenciaNominal += 1;
-//        }
-//    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1026,6 +966,7 @@ public class Perguntas extends javax.swing.JFrame {
         valorResposta();
         comparaResposta();
         chamarTodos();
+        calibrar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CS4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CS4ActionPerformed
