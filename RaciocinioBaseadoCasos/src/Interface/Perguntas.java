@@ -885,16 +885,16 @@ public class Perguntas extends javax.swing.JFrame {
     public void aleatorio() {
 
         Random r = new Random();
-        tipoPergunta = r.nextInt(150) + 1;
-        // JOptionPane.showMessageDialog(null, tipoPergunta);
-
-        quantidadePerguntas();
-        // JOptionPane.showMessageDialog(null, "Numero Aleatorio");
+        tipoPergunta = r.nextInt(regenciaNominal) + 1;
+        
+        quantidadePerguntas(); 
+/* Aqui ele chama o metodo quantidadePerguntas() para saber quantas perguntas exitem para depois ele
+        escolher uma pergunta aleatoria.
+  */      
         //Aqui vem um codigo que faz escolher a pergunta aleatoria
         Random Aleatorio = new Random();
         questaoAleatoria = Aleatorio.nextInt(a) + 1;
-        //  JOptionPane.showMessageDialog(null, "Depois do Random " + questaoAleatoria);
-    }
+           }
 
     public void chamarTodos() {
         aleatorio();
