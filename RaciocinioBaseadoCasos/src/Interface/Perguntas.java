@@ -60,11 +60,11 @@ public class Perguntas extends javax.swing.JFrame {
     int tipoPergunta = 0;
 
     int contadorQuestoes = 0;
-    
+
     int erradaCrase = 0;
-    
+
     int erradaRegenciaVerbal = 0;
-    
+
     int erradaRegenciaNominal = 0;
 
     //String para pegar a pergunta no BD
@@ -311,7 +311,7 @@ public class Perguntas extends javax.swing.JFrame {
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(null, error);
             }
-             tipo.setText("Verbal");
+            tipo.setText("Verbal");
         }
 
         if (tipoPergunta > regenciaVerbal && tipoPergunta <= regenciaNominal) {
@@ -333,8 +333,8 @@ public class Perguntas extends javax.swing.JFrame {
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(null, error);
             }
-            
-             tipo.setText("Nominal");
+
+            tipo.setText("Nominal");
         }
 
     }
