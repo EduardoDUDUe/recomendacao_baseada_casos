@@ -69,7 +69,15 @@ public class Perguntas extends javax.swing.JFrame {
 
     int quantidadeDicaCrase = 0;
     int aleatorioDicaCrase = 0;
-    String dicaCrase = "";
+    String TextoDicaCrase = "";
+
+    int quantidadeDicaRegenciaVerbal = 0;
+    int aleatorioDicaRegenciaVerbal = 0;
+    String TextoDicaRegenciaVerbal = "";
+
+    int quantidadeDicaRegenciaNominal = 0;
+    int aleatorioDicaRegenciaNominal = 0;
+    String TextoDicaRegenciaNominal = "";
 
     //String para pegar a pergunta no BD
     String pergunta = "";
@@ -190,11 +198,11 @@ public class Perguntas extends javax.swing.JFrame {
         quantidadePercentualRegenciaVerbal();
         quantidadePercentualRegenciaNominal();
     }
-    //Metodos das dicas
 
+    //Metodos das dicas
     public void quantidadeDicaCrase() {
 
-        String sql = "select count(*) as dica from crase";
+        String sql = "select count(*) as dica from dicacrase";
         try {
             //pesquisando o valor
             pst = conect.prepareStatement(sql);
@@ -203,7 +211,7 @@ public class Perguntas extends javax.swing.JFrame {
             rs = pst.executeQuery();
             rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
 
-            quantidadeDicaCrase = rs.getInt("dica"); //coloca o resultado em uma variavel
+            quantidadeDicaCrase = rs.getInt("dicacrase"); //coloca o resultado em uma variavel
 
             //Agora eu sei quantas perguntas existem na tebela Crase
         } catch (SQLException error) {
@@ -229,12 +237,57 @@ public class Perguntas extends javax.swing.JFrame {
             rs = pst.executeQuery();
             rs.next();
 
-            dicaCrase = rs.getString("dica");
+            TextoDicaCrase = rs.getString("dica");
 
         } catch (SQLException error) {
             JOptionPane.showMessageDialog(null, error);
         }
-        JOptionPane.showMessageDialog(null, dicaCrase);
+        JOptionPane.showMessageDialog(null, TextoDicaCrase);
+    }
+
+    public void quantidadeDicaRegenciaVerbal() {
+
+        String sql = "select count(*) as dica from dicaregenciaverbal";
+        try {
+            //pesquisando o valor
+            pst = conect.prepareStatement(sql);
+
+            //pegando um valor e colocando em um objeto tipo Resultset ("rs")
+            rs = pst.executeQuery();
+            rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
+
+            quantidadeDicaRegenciaVerbal = rs.getInt("dicaregenciaverbal"); //coloca o resultado em uma variavel
+
+            //Agora eu sei quantas perguntas existem na tebela Crase
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }
+
+    public void dicaRegenciaVerbal() {
+
+        quantidadeDicaRegenciaVerbal();
+
+        Random r = new Random();
+        aleatorioDicaRegenciaVerbal = r.nextInt(quantidadeDicaRegenciaVerbal) + 1;
+
+        String sql = "select dica from dicacrase where id = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setInt(1, aleatorioDicaRegenciaVerbal); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            TextoDicaRegenciaVerbal = rs.getString("dica");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+        JOptionPane.showMessageDialog(null, TextoDicaRegenciaVerbal);
     }
 
     //Metodos para ser trabalhar com a calibragem do usuario
