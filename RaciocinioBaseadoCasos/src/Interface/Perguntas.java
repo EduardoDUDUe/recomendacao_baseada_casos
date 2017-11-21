@@ -67,6 +67,10 @@ public class Perguntas extends javax.swing.JFrame {
 
     int erradaRegenciaNominal = 0;
 
+    int quantidadeDicaCrase = 0;
+    int aleatorioDicaCrase = 0;
+    String dicaCrase = "";
+
     //String para pegar a pergunta no BD
     String pergunta = "";
 
@@ -185,6 +189,52 @@ public class Perguntas extends javax.swing.JFrame {
         quantidadePercentualCrase();
         quantidadePercentualRegenciaVerbal();
         quantidadePercentualRegenciaNominal();
+    }
+    //Metodos das dicas
+
+    public void quantidadeDicaCrase() {
+
+        String sql = "select count(*) as dica from crase";
+        try {
+            //pesquisando o valor
+            pst = conect.prepareStatement(sql);
+
+            //pegando um valor e colocando em um objeto tipo Resultset ("rs")
+            rs = pst.executeQuery();
+            rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
+
+            quantidadeDicaCrase = rs.getInt("dica"); //coloca o resultado em uma variavel
+
+            //Agora eu sei quantas perguntas existem na tebela Crase
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }
+
+    public void dicaCrase() {
+
+        quantidadeDicaCrase();
+
+        Random r = new Random();
+        aleatorioDicaCrase = r.nextInt(quantidadeDicaCrase) + 1;
+
+        String sql = "select dica from dicacrase where id = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setInt(1, aleatorioDicaCrase); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            dicaCrase = rs.getString("dica");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+        JOptionPane.showMessageDialog(null, dicaCrase);
     }
 
     //Metodos para ser trabalhar com a calibragem do usuario
@@ -442,6 +492,7 @@ public class Perguntas extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Crase");
                 ajustarCrase();
+                dicaCrase();
             }
 
             if (erradaRegenciaVerbal > erradaCrase && erradaRegenciaVerbal > erradaRegenciaNominal) {
