@@ -301,17 +301,33 @@ public class Perguntas extends javax.swing.JFrame {
         }
 
         ajustarRegenciaVerbalMenos();
+
+        while (crase > 70) {
+            ajustarCraseMenos();
+        }
+        while (crase < 30) {
+            ajustarCraseMais();
+        }
+
     }
 
     public void ajustarRegenciaVerbal() {
         ajustarRegenciaVerbalMais();
         ajustarCraseMenos();
+
+        while (regenciaVerbal > 120) {
+            ajustarRegenciaVerbalMenos();
+        }
+        while (regenciaVerbal < 80) {
+            ajustarRegenciaVerbalMais();
+        }
+
     }
 
     public void ajustarRegenciaNominal() {
         ajustarCraseMenos();
-        
-         for (int i = 0; i < 2; i++) {
+
+        for (int i = 0; i < 2; i++) {
             ajustarRegenciaVerbalMenos();
         }
     }
