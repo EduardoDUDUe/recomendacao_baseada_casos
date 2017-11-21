@@ -103,7 +103,7 @@ public class Perguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
 
-        crase += 4;
+        crase += 2;
 
         String sql1 = "Update usuario set quantidadecrase = ?";
 
@@ -173,7 +173,7 @@ public class Perguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
 
-        regenciaVerbal += 4;
+        regenciaVerbal += 2;
 
         String sql1 = "Update usuario set quantidaderegenciaverbal = ?";
 
@@ -242,7 +242,7 @@ public class Perguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
 
-        regenciaNominal += 4;
+        regenciaNominal += 2;
 
         String sqlNominal1 = "Update usuario set quantiregencianominal = ?";
 
@@ -302,8 +302,6 @@ public class Perguntas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Mais erros em Crase");
                 ajustarCraseMais();
                 ajustarRegenciaVerbalMenos();
-                ajustarRegenciaNominalMenos();
-
             }
 
             if (erradaRegenciaVerbal > erradaCrase && erradaRegenciaVerbal > erradaRegenciaNominal) {
@@ -311,7 +309,6 @@ public class Perguntas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Mais erros em Verbal");
                 ajustarRegenciaVerbalMais();
                 ajustarCraseMenos();
-                ajustarRegenciaNominalMenos();
             }
 
             if (erradaRegenciaNominal > erradaRegenciaVerbal && erradaRegenciaNominal > erradaCrase) {
@@ -319,7 +316,6 @@ public class Perguntas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Mais erros em Nominal");
                 ajustarRegenciaNominalMais();
                 ajustarCraseMenos();
-                ajustarRegenciaVerbalMenos();
             }
 
             contadorQuestoes = 0;
@@ -886,15 +882,15 @@ public class Perguntas extends javax.swing.JFrame {
 
         Random r = new Random();
         tipoPergunta = r.nextInt(regenciaNominal) + 1;
-        
-        quantidadePerguntas(); 
-/* Aqui ele chama o metodo quantidadePerguntas() para saber quantas perguntas exitem para depois ele
+
+        quantidadePerguntas();
+        /* Aqui ele chama o metodo quantidadePerguntas() para saber quantas perguntas exitem para depois ele
         escolher uma pergunta aleatoria.
-  */      
+         */
         //Aqui vem um codigo que faz escolher a pergunta aleatoria
         Random Aleatorio = new Random();
         questaoAleatoria = Aleatorio.nextInt(a) + 1;
-           }
+    }
 
     public void chamarTodos() {
         aleatorio();
