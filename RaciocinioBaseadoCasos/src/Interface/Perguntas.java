@@ -294,28 +294,47 @@ public class Perguntas extends javax.swing.JFrame {
 
     }
 
+    public void ajustarCrase() {
+
+        for (int i = 0; i < 2; i++) {
+            ajustarCraseMais();
+        }
+
+        ajustarRegenciaVerbalMais();
+    }
+
+    public void ajustarRegenciaVerbal() {
+        ajustarRegenciaVerbalMais();
+        ajustarCraseMenos();
+    }
+
+    public void ajustarRegenciaNominal() {
+        ajustarCraseMenos();
+        
+         for (int i = 0; i < 2; i++) {
+            ajustarRegenciaVerbalMenos();
+        }
+    }
+
     public void calibrar() {
 
         if (contadorQuestoes == 6) {
             if (erradaCrase > erradaRegenciaVerbal && erradaCrase > erradaRegenciaNominal) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Crase");
-                ajustarCraseMais();
-                ajustarRegenciaVerbalMenos();
+                ajustarCrase();
             }
 
             if (erradaRegenciaVerbal > erradaCrase && erradaRegenciaVerbal > erradaRegenciaNominal) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Verbal");
-                ajustarRegenciaVerbalMais();
-                ajustarCraseMenos();
+                ajustarRegenciaVerbal();
             }
 
             if (erradaRegenciaNominal > erradaRegenciaVerbal && erradaRegenciaNominal > erradaCrase) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Nominal");
-                ajustarRegenciaNominalMais();
-                ajustarCraseMenos();
+                ajustarRegenciaNominal();
             }
 
             contadorQuestoes = 0;
