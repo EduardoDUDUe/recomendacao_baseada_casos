@@ -85,6 +85,126 @@ public class Perguntas extends javax.swing.JFrame {
     //String para pegar a Alternativa E no BD
     String alternativaE = "";
 
+    public void quantidadePerguntas() {
+
+        if (tipoPergunta <= crase) {
+
+            String sql = "select count(*) as pergunta from crase";
+            try {
+                //pesquisando o valor
+                pst = conect.prepareStatement(sql);
+
+                //pegando um valor e colocando em um objeto tipo Resultset ("rs")
+                rs = pst.executeQuery();
+                rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
+
+                a = rs.getInt("pergunta"); //coloca o resultado em uma variavel
+
+                //Agora eu sei quantas perguntas existem na tebela Crase
+            } catch (SQLException error) {
+                JOptionPane.showMessageDialog(null, error);
+            }
+        }
+
+        if (tipoPergunta > crase && tipoPergunta <= regenciaVerbal) {
+
+            String sql = "select count(*) as pergunta from concordanciaverbal";
+            try {
+                //pesquisando o valor
+                pst = conect.prepareStatement(sql);
+
+                //pegando um valor e colocando em um objeto tipo Resultset ("rs")
+                rs = pst.executeQuery();
+                rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
+
+                a = rs.getInt("pergunta"); //coloca o resultado em uma variavel
+
+                //Agora eu sei quantas perguntas existem na tebela Crase
+            } catch (SQLException error) {
+                JOptionPane.showMessageDialog(null, error);
+            }
+        }
+
+        if (tipoPergunta > regenciaVerbal && tipoPergunta <= regenciaNominal) {
+
+            String sql = "select count(*) as pergunta from concordancianominal";
+            try {
+
+                //pesquisando o valor
+                pst = conect.prepareStatement(sql);
+
+                //pegando um valor e colocando em um objeto tipo Resultset ("rs")
+                rs = pst.executeQuery();
+
+                rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
+
+                a = rs.getInt("pergunta"); //coloca o resultado em uma variavel
+
+                //Agora eu sei quantas perguntas existem na tebela
+            } catch (SQLException error) {
+                JOptionPane.showMessageDialog(null, error);
+            }
+        }
+    }
+
+    public void colocarTela() {
+
+        //Este metodo coloca tudo na tela para ser respondido
+        TXTPergunta.setText(pergunta);
+        CS1.setText(alternativaA);
+        CS2.setText(alternativaB);
+        CS3.setText(alternativaC);
+        CS4.setText(alternativaD);
+        CS5.setText(alternativaE);
+    }
+
+    public void aleatorio() {
+
+        Random r = new Random();
+        tipoPergunta = r.nextInt(regenciaNominal) + 1;
+
+        quantidadePerguntas();
+        /* Aqui ele chama o metodo quantidadePerguntas() para saber quantas perguntas exitem para depois ele
+        escolher uma pergunta aleatoria.
+         */
+        //Aqui vem um codigo que faz escolher a pergunta aleatoria
+        Random Aleatorio = new Random();
+        questaoAleatoria = Aleatorio.nextInt(a) + 1;
+    }
+
+    public void chamarTodos() {
+        aleatorio();
+        respostaCerta();
+        Pergunta();
+        RespostaA();
+        RespostaB();
+        RespostaC();
+        RespostaD();
+        RespostaE();
+        colocarTela();
+        quantidadePercentualCrase();
+        quantidadePercentualRegenciaVerbal();
+        quantidadePercentualRegenciaNominal();
+    }
+
+    //Metodos para ser trabalhar com a calibragem do usuario
+    public void ajustarCrase() {
+
+        for (int i = 0; i < 2; i++) {
+            ajustarCraseMais();
+        }
+
+        ajustarRegenciaVerbalMenos();
+
+        while (crase > 70) {
+            ajustarCraseMenos();
+        }
+        while (crase < 30) {
+            ajustarCraseMais();
+        }
+
+    }
+
     public void ajustarCraseMais() {
 
         String sql = "select quantidadecrase from usuario where login = ?";
@@ -294,23 +414,6 @@ public class Perguntas extends javax.swing.JFrame {
 
     }
 
-    public void ajustarCrase() {
-
-        for (int i = 0; i < 2; i++) {
-            ajustarCraseMais();
-        }
-
-        ajustarRegenciaVerbalMenos();
-
-        while (crase > 70) {
-            ajustarCraseMenos();
-        }
-        while (crase < 30) {
-            ajustarCraseMais();
-        }
-
-    }
-
     public void ajustarRegenciaVerbal() {
         ajustarRegenciaVerbalMais();
         ajustarCraseMenos();
@@ -360,6 +463,7 @@ public class Perguntas extends javax.swing.JFrame {
         }
     }
 
+    //Metodos para pegar a calibragem no BD
     public void quantidadePercentualCrase() {
 
         String sql = "select quantidadecrase from usuario where login = ?";
@@ -417,66 +521,58 @@ public class Perguntas extends javax.swing.JFrame {
 
     }
 
-    public void quantidadePerguntas() {
-
-        if (tipoPergunta <= crase) {
-
-            String sql = "select count(*) as pergunta from crase";
-            try {
-                //pesquisando o valor
-                pst = conect.prepareStatement(sql);
-
-                //pegando um valor e colocando em um objeto tipo Resultset ("rs")
-                rs = pst.executeQuery();
-                rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
-
-                a = rs.getInt("pergunta"); //coloca o resultado em uma variavel
-
-                //Agora eu sei quantas perguntas existem na tebela Crase
-            } catch (SQLException error) {
-                JOptionPane.showMessageDialog(null, error);
-            }
+    //Metodos para trabalhar com as respostas
+    public void valorResposta() {
+        if (CS1.isSelected()) {
+            resposta = 1;
         }
 
-        if (tipoPergunta > crase && tipoPergunta <= regenciaVerbal) {
-
-            String sql = "select count(*) as pergunta from concordanciaverbal";
-            try {
-                //pesquisando o valor
-                pst = conect.prepareStatement(sql);
-
-                //pegando um valor e colocando em um objeto tipo Resultset ("rs")
-                rs = pst.executeQuery();
-                rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
-
-                a = rs.getInt("pergunta"); //coloca o resultado em uma variavel
-
-                //Agora eu sei quantas perguntas existem na tebela Crase
-            } catch (SQLException error) {
-                JOptionPane.showMessageDialog(null, error);
-            }
+        if (CS2.isSelected()) {
+            resposta = 2;
         }
 
-        if (tipoPergunta > regenciaVerbal && tipoPergunta <= regenciaNominal) {
-
-            String sql = "select count(*) as pergunta from concordancianominal";
-            try {
-
-                //pesquisando o valor
-                pst = conect.prepareStatement(sql);
-
-                //pegando um valor e colocando em um objeto tipo Resultset ("rs")
-                rs = pst.executeQuery();
-
-                rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
-
-                a = rs.getInt("pergunta"); //coloca o resultado em uma variavel
-
-                //Agora eu sei quantas perguntas existem na tebela
-            } catch (SQLException error) {
-                JOptionPane.showMessageDialog(null, error);
-            }
+        if (CS3.isSelected()) {
+            resposta = 3;
         }
+
+        if (CS4.isSelected()) {
+            resposta = 4;
+        }
+
+        if (CS5.isSelected()) {
+            resposta = 5;
+        }
+    }
+
+    public void comparaResposta() {
+        if (resposta == respostaCerta) {
+            JOptionPane.showMessageDialog(null, "Resposta Certa");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Resposta Errada");
+            quantidadeQuestoesErrada();
+
+            if (tipoPergunta <= crase) {
+
+                erradaCrase++;
+            }
+
+            if (tipoPergunta > crase && tipoPergunta <= regenciaVerbal) {
+
+                erradaRegenciaVerbal++;
+            }
+
+            if (tipoPergunta > regenciaVerbal && tipoPergunta <= regenciaNominal) {
+
+                erradaRegenciaNominal++;
+            }
+
+        }
+
+        quantidadeQuestoes();
+
+        contadorQuestoes += 1;
+
     }
 
     public void respostaCerta() {
@@ -541,6 +637,82 @@ public class Perguntas extends javax.swing.JFrame {
 
     }
 
+    //Metodos para saber quantas questões então sendo trabalhadas
+    public void quantidadeQuestoesErrada() {
+
+        String sql = "select totalerro from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setString(1, usuario); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            quantidadeQuestoes = rs.getInt("totalerro");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+        //Alterar quantidade total de questões.
+        quantidadeQuestoes += 1;
+
+        String sql1 = "Update usuario set totalerro = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sql1);
+
+            pst.setInt(1, quantidadeQuestoes);
+
+            pst.execute();
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+    }
+
+    public void quantidadeQuestoes() {
+
+        String sql = "select totalquestoes from usuario where login = ?";
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setString(1, usuario); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            quantidadeQuestoes = rs.getInt("totalquestoes");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+        //Alterar quantidade total de questões.
+        quantidadeQuestoes += 1;
+
+        String sql1 = "Update usuario set totalquestoes = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sql1);
+
+            pst.setInt(1, quantidadeQuestoes);
+
+            pst.execute();
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+
+    }
+
+    //Metodos para pegar perguntas e respostas no banco
     public void Pergunta() {
 
         if (tipoPergunta <= crase) {
@@ -902,173 +1074,7 @@ public class Perguntas extends javax.swing.JFrame {
         }
     }
 
-    public void colocarTela() {
-
-        //Este metodo coloca tudo na tela para ser respondido
-        TXTPergunta.setText(pergunta);
-        CS1.setText(alternativaA);
-        CS2.setText(alternativaB);
-        CS3.setText(alternativaC);
-        CS4.setText(alternativaD);
-        CS5.setText(alternativaE);
-    }
-
-    public void aleatorio() {
-
-        Random r = new Random();
-        tipoPergunta = r.nextInt(regenciaNominal) + 1;
-
-        quantidadePerguntas();
-        /* Aqui ele chama o metodo quantidadePerguntas() para saber quantas perguntas exitem para depois ele
-        escolher uma pergunta aleatoria.
-         */
-        //Aqui vem um codigo que faz escolher a pergunta aleatoria
-        Random Aleatorio = new Random();
-        questaoAleatoria = Aleatorio.nextInt(a) + 1;
-    }
-
-    public void chamarTodos() {
-        aleatorio();
-        respostaCerta();
-        Pergunta();
-        RespostaA();
-        RespostaB();
-        RespostaC();
-        RespostaD();
-        RespostaE();
-        colocarTela();
-        quantidadePercentualCrase();
-        quantidadePercentualRegenciaVerbal();
-        quantidadePercentualRegenciaNominal();
-    }
-
-    public void valorResposta() {
-        if (CS1.isSelected()) {
-            resposta = 1;
-        }
-
-        if (CS2.isSelected()) {
-            resposta = 2;
-        }
-
-        if (CS3.isSelected()) {
-            resposta = 3;
-        }
-
-        if (CS4.isSelected()) {
-            resposta = 4;
-        }
-
-        if (CS5.isSelected()) {
-            resposta = 5;
-        }
-    }
-
-    public void comparaResposta() {
-        if (resposta == respostaCerta) {
-            JOptionPane.showMessageDialog(null, "Resposta Certa");
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Resposta Errada");
-            quantidadeQuestoesErrada();
-
-            if (tipoPergunta <= crase) {
-
-                erradaCrase++;
-            }
-
-            if (tipoPergunta > crase && tipoPergunta <= regenciaVerbal) {
-
-                erradaRegenciaVerbal++;
-            }
-
-            if (tipoPergunta > regenciaVerbal && tipoPergunta <= regenciaNominal) {
-
-                erradaRegenciaNominal++;
-            }
-
-        }
-
-        quantidadeQuestoes();
-
-        contadorQuestoes += 1;
-
-    }
-
-    public void quantidadeQuestoesErrada() {
-
-        String sql = "select totalerro from usuario where login = ?";
-        try {
-
-            pst = conect.prepareStatement(sql);
-
-            pst.setString(1, usuario); //Indice da busca ID na tabela crase
-
-            rs = pst.executeQuery();
-            rs.next();
-
-            quantidadeQuestoes = rs.getInt("totalerro");
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-        //Alterar quantidade total de questões.
-        quantidadeQuestoes += 1;
-
-        String sql1 = "Update usuario set totalerro = ?";
-
-        try {
-
-            pst = conect.prepareStatement(sql1);
-
-            pst.setInt(1, quantidadeQuestoes);
-
-            pst.execute();
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-    }
-
-    public void quantidadeQuestoes() {
-
-        String sql = "select totalquestoes from usuario where login = ?";
-        try {
-
-            pst = conect.prepareStatement(sql);
-
-            pst.setString(1, usuario); //Indice da busca ID na tabela crase
-
-            rs = pst.executeQuery();
-            rs.next();
-
-            quantidadeQuestoes = rs.getInt("totalquestoes");
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-        //Alterar quantidade total de questões.
-        quantidadeQuestoes += 1;
-
-        String sql1 = "Update usuario set totalquestoes = ?";
-
-        try {
-
-            pst = conect.prepareStatement(sql1);
-
-            pst.setInt(1, quantidadeQuestoes);
-
-            pst.execute();
-
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-
-    }
-
+    //Metodos para manter so uma caixa de seleção selecionada
     public void CSUm() {
         CS2.setSelected(false);
         CS3.setSelected(false);
