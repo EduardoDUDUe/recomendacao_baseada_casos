@@ -300,7 +300,7 @@ public class Perguntas extends javax.swing.JFrame {
             ajustarCraseMais();
         }
 
-        ajustarRegenciaVerbalMais();
+        ajustarRegenciaVerbalMenos();
     }
 
     public void ajustarRegenciaVerbal() {
