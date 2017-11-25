@@ -328,12 +328,13 @@ public class Perguntas extends javax.swing.JFrame {
 
         crase += 2;
 
-        String sql1 = "Update usuario set quantidadecrase = ?";
+        String sql1 = "Update usuario set quantidadecrase = ? where login = ?";
 
         try {
 
             pst = conect.prepareStatement(sql1);
 
+            pst.setString(2, usuario);
             pst.setInt(1, crase);
 
             pst.execute();
@@ -362,12 +363,13 @@ public class Perguntas extends javax.swing.JFrame {
 
         crase -= 2;
 
-        String sqlVerbal1 = "Update usuario set quantidadecrase = ?";
+        String sqlVerbal1 = "Update usuario set quantidadecrase = ? where login = ?";
 
         try {
 
             pst = conect.prepareStatement(sqlVerbal1);
 
+            pst.setString(2, usuario);
             pst.setInt(1, crase);
 
             pst.execute();
@@ -398,12 +400,13 @@ public class Perguntas extends javax.swing.JFrame {
 
         regenciaVerbal += 2;
 
-        String sql1 = "Update usuario set quantidaderegenciaverbal = ?";
+        String sql1 = "Update usuario set quantidaderegenciaverbal = ? where login = ?";
 
         try {
 
             pst = conect.prepareStatement(sql1);
 
+            pst.setString(2, usuario);
             pst.setInt(1, regenciaVerbal);
 
             pst.execute();
@@ -432,12 +435,13 @@ public class Perguntas extends javax.swing.JFrame {
 
         regenciaVerbal -= 2;
 
-        String sqlVerbal1 = "Update usuario set quantidaderegenciaverbal = ?";
+        String sqlVerbal1 = "Update usuario set quantidaderegenciaverbal = ? where login = ?";
 
         try {
 
             pst = conect.prepareStatement(sqlVerbal1);
 
+            pst.setString(2, usuario);
             pst.setInt(1, regenciaVerbal);
 
             pst.execute();
@@ -763,12 +767,13 @@ public class Perguntas extends javax.swing.JFrame {
         //Alterar quantidade total de questões.
         quantidadeQuestoes += 1;
 
-        String sql1 = "Update usuario set totalerro = ?";
+        String sql1 = "Update usuario set totalerro = ? where login = ?";
 
         try {
 
             pst = conect.prepareStatement(sql1);
 
+            pst.setString(2, usuario);
             pst.setInt(1, quantidadeQuestoes);
 
             pst.execute();
@@ -800,12 +805,13 @@ public class Perguntas extends javax.swing.JFrame {
         //Alterar quantidade total de questões.
         quantidadeQuestoes += 1;
 
-        String sql1 = "Update usuario set totalquestoes = ?";
+        String sql1 = "Update usuario set totalquestoes = ? where login = ?";
 
         try {
 
             pst = conect.prepareStatement(sql1);
 
+            pst.setString(2, usuario);
             pst.setInt(1, quantidadeQuestoes);
 
             pst.execute();
@@ -1228,6 +1234,7 @@ public class Perguntas extends javax.swing.JFrame {
         CS4 = new javax.swing.JCheckBox();
         CS5 = new javax.swing.JCheckBox();
         tipo = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -1282,6 +1289,13 @@ public class Perguntas extends javax.swing.JFrame {
 
         tipo.setText("Tipo");
 
+        jButton2.setText("Sair");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1306,12 +1320,14 @@ public class Perguntas extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(CS1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(CS2, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
-                                        .addGap(201, 201, 201)
-                                        .addComponent(tipo))
-                                    .addComponent(CS1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(CS2, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(152, 152, 152)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton2)
+                                            .addComponent(tipo))))))
                         .addGap(0, 28, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1321,8 +1337,11 @@ public class Perguntas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(tipo))
-                .addGap(18, 18, 18)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(tipo)))
+                .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(CS1)
@@ -1334,7 +1353,7 @@ public class Perguntas extends javax.swing.JFrame {
                 .addComponent(CS4)
                 .addGap(18, 18, 18)
                 .addComponent(CS5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -1369,6 +1388,14 @@ public class Perguntas extends javax.swing.JFrame {
     private void CS5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CS5ActionPerformed
         CSCinco();
     }//GEN-LAST:event_CS5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        Login TelaLogin = new Login();
+        TelaLogin.setVisible(true);
+        dispose();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1421,6 +1448,7 @@ public class Perguntas extends javax.swing.JFrame {
     private javax.swing.JCheckBox CS5;
     private javax.swing.JTextPane TXTPergunta;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel tipo;
