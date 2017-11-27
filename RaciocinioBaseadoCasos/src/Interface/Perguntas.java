@@ -219,6 +219,44 @@ public class Perguntas extends javax.swing.JFrame {
         }
     }
 
+    public void quantidadeDicaRegenciaVerbal() {
+
+        String sql = "select count(*) as dica from dicaregenciaverbal";
+        try {
+            //pesquisando o valor
+            pst = conect.prepareStatement(sql);
+
+            //pegando um valor e colocando em um objeto tipo Resultset ("rs")
+            rs = pst.executeQuery();
+            rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
+
+            quantidadeDicaRegenciaVerbal = rs.getInt("dicaregenciaverbal"); //coloca o resultado em uma variavel
+
+            //Agora eu sei quantas perguntas existem na tebela Crase
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }
+
+    public void quantidadeDicaRegenciaNominal() {
+
+        String sql = "select count(*) as dica from dicaregencianominal";
+        try {
+            //pesquisando o valor
+            pst = conect.prepareStatement(sql);
+
+            //pegando um valor e colocando em um objeto tipo Resultset ("rs")
+            rs = pst.executeQuery();
+            rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
+
+            quantidadeDicaRegenciaNominal = rs.getInt("dicaregencianominal"); //coloca o resultado em uma variavel
+
+            //Agora eu sei quantas perguntas existem na tebela Crase
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }
+
     public void dicaCrase() {
 
         quantidadeDicaCrase();
@@ -245,25 +283,6 @@ public class Perguntas extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, TextoDicaCrase);
     }
 
-    public void quantidadeDicaRegenciaVerbal() {
-
-        String sql = "select count(*) as dica from dicaregenciaverbal";
-        try {
-            //pesquisando o valor
-            pst = conect.prepareStatement(sql);
-
-            //pegando um valor e colocando em um objeto tipo Resultset ("rs")
-            rs = pst.executeQuery();
-            rs.next(); //aqui foi para corrigir um erro de pegar. Foi Cleyton que disse o que fazer.
-
-            quantidadeDicaRegenciaVerbal = rs.getInt("dicaregenciaverbal"); //coloca o resultado em uma variavel
-
-            //Agora eu sei quantas perguntas existem na tebela Crase
-        } catch (SQLException error) {
-            JOptionPane.showMessageDialog(null, error);
-        }
-    }
-
     public void dicaRegenciaVerbal() {
 
         quantidadeDicaRegenciaVerbal();
@@ -271,7 +290,7 @@ public class Perguntas extends javax.swing.JFrame {
         Random r = new Random();
         aleatorioDicaRegenciaVerbal = r.nextInt(quantidadeDicaRegenciaVerbal) + 1;
 
-        String sql = "select dica from dicacrase where id = ?";
+        String sql = "select dica from dicaregenciaverbal where id = ?";
 
         try {
 
@@ -288,6 +307,32 @@ public class Perguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
         JOptionPane.showMessageDialog(null, TextoDicaRegenciaVerbal);
+    }
+
+    public void dicaRegenciaNominal() {
+
+        quantidadeDicaRegenciaNominal();
+
+        Random r = new Random();
+        aleatorioDicaRegenciaNominal = r.nextInt(quantidadeDicaRegenciaNominal) + 1;
+
+        String sql = "select dica from dicaregencianominal where id = ?";
+
+        try {
+
+            pst = conect.prepareStatement(sql);
+
+            pst.setInt(1, aleatorioDicaRegenciaNominal); //Indice da busca ID na tabela crase
+
+            rs = pst.executeQuery();
+            rs.next();
+
+            TextoDicaRegenciaNominal = rs.getString("dica");
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error);
+        }
+        JOptionPane.showMessageDialog(null, TextoDicaRegenciaNominal);
     }
 
     //Metodos para ser trabalhar com a calibragem do usuario
@@ -556,12 +601,14 @@ public class Perguntas extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Verbal");
                 ajustarRegenciaVerbal();
+                dicaRegenciaVerbal();
             }
 
             if (erradaRegenciaNominal > erradaRegenciaVerbal && erradaRegenciaNominal > erradaCrase) {
 
                 JOptionPane.showMessageDialog(null, "Mais erros em Nominal");
                 ajustarRegenciaNominal();
+                dicaRegenciaNominal();
             }
 
             contadorQuestoes = 0;
@@ -1394,7 +1441,7 @@ public class Perguntas extends javax.swing.JFrame {
         Login TelaLogin = new Login();
         TelaLogin.setVisible(true);
         dispose();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
